@@ -122,6 +122,70 @@ view: web_returns {
     sql: ${TABLE}.WR_WEB_PAGE_SK ;;
   }
 
+#For Charts
+  dimension: is_mtd{
+    type: yesno
+    sql:
+      ${date_dim.d_year} = EXTRACT(year FROM {% parameter date_dim.datefilter %})
+      and
+      cast(cast(substring(${date_dim.d_month},6,2) as INT64) as string)= cast(EXTRACT(month FROM {% parameter date_dim.datefilter %}) as string)
+      and
+      ${date_dim.d_date} <= cast({% parameter date_dim.datefilter %} as DATE)
+      ;;
+  }
+  dimension: is_sply_mtd{
+    type: yesno
+    sql:
+      ${date_dim.d_year} = EXTRACT(year FROM {% parameter date_dim.datefilter %}) -1
+      and
+      cast(cast(substring(${date_dim.d_month},6,2) as INT64) as string)= cast(EXTRACT(month FROM {% parameter date_dim.datefilter %}) as string)
+      and
+      ${date_dim.d_date}<= DATE_ADD(cast ({% parameter date_dim.datefilter %} as DATE),INTERVAL -365 DAY)
+      ;;
+  }
+  dimension: dateflag{
+    type: yesno
+    sql:
+     ( ${date_dim.d_year} = EXTRACT(year FROM {% parameter date_dim.datefilter %})
+      and
+      cast(cast(substring(${date_dim.d_month},6,2) as INT64) as string)= cast(EXTRACT(month FROM {% parameter date_dim.datefilter %}) as string)
+      and
+      ${date_dim.d_date} <= cast({% parameter date_dim.datefilter %} as DATE)
+      )
+      or
+      ( ${date_dim.d_year} = EXTRACT(year FROM {% parameter date_dim.datefilter %}) -1
+      and
+      cast(cast(substring(${date_dim.d_month},6,2) as INT64) as string)= cast(EXTRACT(month FROM {% parameter date_dim.datefilter %}) as string)
+      and
+      ${date_dim.d_date}<= DATE_ADD(cast ({% parameter date_dim.datefilter %} as DATE),INTERVAL -365 DAY)
+      )
+      ;;
+  }
+  measure: currentyear_returnamt {
+    type: sum
+    sql:  ${TABLE}.WR_RETURN_AMT;;
+    filters: [is_mtd: "yes"]
+  }
+  measure: previousyear_returnamt {
+    type: sum
+    sql:  ${TABLE}.WR_RETURN_AMT;;
+    filters: [is_sply_mtd: "yes"]
+  }
+  measure: currentyear_returnshipcost {
+    type: sum
+    sql:  ${TABLE}.WR_RETURN_SHIP_COST;;
+    filters: [is_mtd: "yes"]
+  }
+  measure: previousyear_returnshipcost {
+    type: sum
+    sql:  ${TABLE}.WR_RETURN_SHIP_COST;;
+    filters: [is_sply_mtd: "yes"]
+  }
+  measure: filter_dateflag {
+    type: sum
+    sql:  1;;
+    filters: [dateflag: "yes"]
+  }
   measure: count {
     type: count
     drill_fields: []

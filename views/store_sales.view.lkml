@@ -289,6 +289,64 @@ view: store_sales {
     value_format: "0.00"
   }
 
+#For Charts
+  dimension: dateflag{
+    type: yesno
+    sql:
+     ( ${date_dim.d_year} = EXTRACT(year FROM {% parameter date_dim.datefilter %})
+      and
+      cast(cast(substring(${date_dim.d_month},6,2) as INT64) as string)= cast(EXTRACT(month FROM {% parameter date_dim.datefilter %}) as string)
+      and
+      ${date_dim.d_date} <= cast({% parameter date_dim.datefilter %} as DATE)
+      )
+      or
+      ( ${date_dim.d_year} = EXTRACT(year FROM {% parameter date_dim.datefilter %}) -1
+      and
+      cast(cast(substring(${date_dim.d_month},6,2) as INT64) as string)= cast(EXTRACT(month FROM {% parameter date_dim.datefilter %}) as string)
+      and
+      ${date_dim.d_date}<= DATE_ADD(cast ({% parameter date_dim.datefilter %} as DATE),INTERVAL -365 DAY)
+      )
+      ;;
+  }
+
+
+  measure: currentyear_salesprice {
+    type: sum
+    sql:  ${TABLE}.SS_SALES_PRICE;;
+    filters: [is_mtd: "yes"]
+  }
+  measure: previousyear_salesprice {
+    type: sum
+    sql:  ${TABLE}.SS_SALES_PRICE;;
+    filters: [is_sply_mtd: "yes"]
+  }
+  measure: currentyear_listprice {
+    type: sum
+    sql:  ${TABLE}.SS_LIST_PRICE;;
+    filters: [is_mtd: "yes"]
+  }
+  measure: previousyear_listprice {
+    type: sum
+    sql:  ${TABLE}.SS_LIST_PRICE;;
+    filters: [is_sply_mtd: "yes"]
+  }
+  measure: currentyear_wholesalecost {
+    type: sum
+    sql:  ${TABLE}."SS_WHOLESALE_COST;;
+    filters: [is_mtd: "yes"]
+  }
+  measure: previousyear_wholesalecost {
+    type: sum
+    sql:  ${TABLE}.SS_WHOLESALE_COST;;
+    filters: [is_sply_mtd: "yes"]
+  }
+  measure: filter_dateflag {
+    type: sum
+    sql:  1;;
+    filters: [dateflag: "yes"]
+  }
+
+
   measure: count {
     type: count
     drill_fields: []
