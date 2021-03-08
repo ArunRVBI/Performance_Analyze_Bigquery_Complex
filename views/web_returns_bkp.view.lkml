@@ -1,5 +1,5 @@
 view: web_returns_bkp {
-  sql_table_name: `TPCDS_DEV.WEB_RETURNS_BKP`
+  sql_table_name: `TPCDS.WEB_RETURNS_BKP`
     ;;
 
   dimension: d_current_day {

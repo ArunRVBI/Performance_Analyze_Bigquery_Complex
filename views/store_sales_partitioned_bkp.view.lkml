@@ -1,5 +1,5 @@
 view: store_sales_partitioned_bkp {
-  sql_table_name: `TPCDS_DEV.STORE_SALES_PARTITIONED_BKP`
+  sql_table_name: `TPCDS.STORE_SALES_PARTITIONED_BKP`
     ;;
 
   dimension: d_current_day {

@@ -1,5 +1,5 @@
 view: store_returns_partitioned {
-  sql_table_name: `TPCDS_DEV.STORE_RETURNS_PARTITIONED`
+  sql_table_name: `TPCDS.STORE_RETURNS_PARTITIONED`
     ;;
 
   dimension: rank {

@@ -314,36 +314,43 @@ view: store_sales {
     type: sum
     sql:  ${TABLE}.SS_SALES_PRICE;;
     filters: [is_mtd: "yes"]
+    value_format: "0.00"
   }
   measure: previousyear_salesprice {
     type: sum
     sql:  ${TABLE}.SS_SALES_PRICE;;
     filters: [is_sply_mtd: "yes"]
+    value_format: "0.00"
   }
   measure: currentyear_listprice {
     type: sum
     sql:  ${TABLE}.SS_LIST_PRICE;;
     filters: [is_mtd: "yes"]
+    value_format: "0.00"
   }
   measure: previousyear_listprice {
     type: sum
     sql:  ${TABLE}.SS_LIST_PRICE;;
     filters: [is_sply_mtd: "yes"]
+    value_format: "0.00"
   }
   measure: currentyear_wholesalecost {
     type: sum
-    sql:  ${TABLE}."SS_WHOLESALE_COST;;
+    sql:  ${TABLE}.SS_WHOLESALE_COST;;
     filters: [is_mtd: "yes"]
+    value_format: "0.00"
   }
   measure: previousyear_wholesalecost {
     type: sum
     sql:  ${TABLE}.SS_WHOLESALE_COST;;
     filters: [is_sply_mtd: "yes"]
+    value_format: "0.00"
   }
   measure: filter_dateflag {
     type: sum
     sql:  1;;
     filters: [dateflag: "yes"]
+    value_format: "0.00"
   }
 
 

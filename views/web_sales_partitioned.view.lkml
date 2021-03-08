@@ -1,5 +1,5 @@
 view: web_sales_partitioned {
-  sql_table_name: `TPCDS_DEV.WEB_SALES_PARTITIONED`
+  sql_table_name: `TPCDS.WEB_SALES_PARTITIONED`
     ;;
 
   dimension: rank {

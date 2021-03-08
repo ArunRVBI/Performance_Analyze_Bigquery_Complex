@@ -1,5 +1,5 @@
 view: store_sales_bkp {
-  sql_table_name: `TPCDS_DEV.STORE_SALES_BKP`
+  sql_table_name: `TPCDS.STORE_SALES_BKP`
     ;;
 
   dimension: d_current_day {

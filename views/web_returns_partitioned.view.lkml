@@ -1,5 +1,5 @@
 view: web_returns_partitioned {
-  sql_table_name: `TPCDS_DEV.WEB_RETURNS_PARTITIONED`
+  sql_table_name: `TPCDS.WEB_RETURNS_PARTITIONED`
     ;;
 
   dimension: rank {
