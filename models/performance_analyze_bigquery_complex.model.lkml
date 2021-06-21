@@ -37,11 +37,11 @@ explore: inventory {}
 explore: item {
   join: store_sales {
     sql_on: ${item.i_item_sk} = ${store_sales.ss_item_sk};;
-    relationship: one_to_one
+    relationship: one_to_many
   }
   join: web_sales {
     sql_on: ${item.i_item_sk} = ${web_sales.ws_item_sk};;
-    relationship: one_to_one
+    relationship: one_to_many
   }
   join:  date_dim{
     type: inner
